@@ -14,7 +14,7 @@ def create_ics_from_vertical_excel(excel_path, calendar_name, file_name):
     ics_content = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        "PRODID:-//HoangTQ//LCK 2026//EN",
+        "PRODID:-//HoangTQ//WorldCup 2026//EN",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
         f"X-WR-CALNAME:{calendar_name}",
@@ -45,7 +45,7 @@ def create_ics_from_vertical_excel(excel_path, calendar_name, file_name):
             raw_time = str(all_rows[i]).strip()      # Dòng 1: 03.04. 15:00
             team1 = str(all_rows[i+1]).strip()       # Dòng 2: Gen.G
             team2 = str(all_rows[i+2]).strip()       # Dòng 3: KT Rolster
-            summary = f"{team1} - {team2}"
+            summary = f"{team1} vs {team2}"
 
             # 2. Parse thời gian (Giả định năm 2026)
             event_time = datetime.strptime(raw_time, "%d.%m. %H:%M")
@@ -57,7 +57,7 @@ def create_ics_from_vertical_excel(excel_path, calendar_name, file_name):
             dt_end_local = (event_time.replace(hour=event_time.hour + 2)).strftime("%Y%m%dT%H%M%S") if event_time.hour < 22 else event_time.strftime("%Y%m%dT235959")
             
             # 3. Tính toán UID
-            uid_str = f"{event_count:03d}_{event_time.strftime('%Y%m%d_%H%M')}@lck.com"
+            uid_str = f"{event_count:03d}_{event_time.strftime('%Y%m%d_%H%M')}@wc.com"
 
             # 4. Tạo block VEVENT theo chuẩn chuyên nghiệp
             ics_content.append("BEGIN:VEVENT")
@@ -97,10 +97,10 @@ def create_ics_from_vertical_excel(excel_path, calendar_name, file_name):
     print(f"--- Hoàn thành! Đã tạo {event_count-1} sự kiện vào file: {output_filename} ---")
 
 # Cấu hình đường dẫn
-file_name = "lck-schedule-2026"
+file_name = "wc-schedule-2026"
 # Lưu ý: Dùng r"" cho đường dẫn Windows để tránh lỗi escape character
-excel_path = r"C:\Python\excel2ics\lck-schedule.xlsx"
-calendar_name = "LCK 2026"
+excel_path = r"C:\Python\excel2ics\wc-schedule.xlsx"
+calendar_name = "WorldCup 2026"
 
 # --- CHẠY TOOL ---
 create_ics_from_vertical_excel(
